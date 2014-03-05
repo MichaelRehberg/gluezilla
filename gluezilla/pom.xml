@@ -42,7 +42,7 @@
                     <include>**/*.html</include>
                     <include>**/*.properties</include>
                 </includes>            
-            </resource>
+            </resource>           
         </resources>
         <plugins>
             <plugin>

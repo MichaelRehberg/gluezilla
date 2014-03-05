@@ -6,13 +6,11 @@
 
 package de.mrehberg.gluezilla.wicket.pages;
 
-import org.apache.wicket.markup.html.WebPage;
-
 /**
  *
  * @author joe
  */
-public class WelcomePage extends WebPage{
+public class WelcomePage extends BasicPage {
     public WelcomePage(){
     }
 }
