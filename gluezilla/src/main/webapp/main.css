@@ -7,3 +7,26 @@ and open the template in the editor.
     Created on : 05.03.2014, 22:40:10
     Author     : joe
 */
+
+.navbar-brand {
+    background-image: url(../../../logo.svg);
+    background-repeat: no-repeat;
+    padding-left: 55px;
+}
+
+body {
+  padding-top: 50px;
+}
+
+ul.gz-products li {
+    float: left;
+    list-style-type: none;
+    margin: 5px;
+}
+ul.gz-products li a {
+    width: 255px;
+    height: 100px;
+    overflow: hidden;
+    line-height: 100px;
+    font-weight: bold;
+}
