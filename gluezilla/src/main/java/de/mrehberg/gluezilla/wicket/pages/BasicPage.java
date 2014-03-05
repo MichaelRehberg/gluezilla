@@ -20,8 +20,8 @@ public abstract class BasicPage extends WebPage{
 
     @Override
     public void renderHead(IHeaderResponse response) {
-        response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.MAIN_CSS)));
         response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.BOOTSTRAP_CSS)));
+        response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.MAIN_CSS)));
         super.renderHead(response); 
     }
 }
