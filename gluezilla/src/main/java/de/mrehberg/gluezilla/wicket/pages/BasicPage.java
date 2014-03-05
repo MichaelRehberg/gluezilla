@@ -8,12 +8,9 @@ package de.mrehberg.gluezilla.wicket.pages;
 
 import de.mrehberg.gluezilla.wicket.Resources;
 import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.CssReferenceHeaderItem;
-import org.apache.wicket.markup.head.CssUrlReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  *
@@ -24,9 +21,7 @@ public abstract class BasicPage extends WebPage{
     @Override
     public void renderHead(IHeaderResponse response) {
         response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.MAIN_CSS)));
+        response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.BOOTSTRAP_CSS)));
         super.renderHead(response); 
     }
-    
-    
-    
 }
