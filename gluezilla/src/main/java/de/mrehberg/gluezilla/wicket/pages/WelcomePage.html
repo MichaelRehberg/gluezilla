@@ -1,37 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd"
-      lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Gluezilla</title>
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Gluezilla</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Browse</a></li>
-                    <li><a href="#about">Create</a></li>
-                    <li><a href="#contact">Review</a></li>
-                </ul>
-            </div>
-        </div>
+<html
+	xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd"
+	lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gluezilla</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container">
+			<h1>Products</h1>
+			<p>Please choose a product:</p>
 
-        <div class="container">
-            <h1>Products</h1>
-            <p>Please choose a product:</p>
-            
-            <ul class="gz-products">
-                <li><a href="#" class="btn btn-default">Product</a></li>
-                <li><a href="#" class="btn btn-default">Product</a></li>
-                <li><a href="#" class="btn btn-default">Product</a></li>
-                <li><a href="#" class="btn btn-default">Product</a></li>
-                <li><a href="#" class="btn btn-default">Product</a></li>
-            </ul>
-        </div>
-    </body> 
+			<ul class="gz-products">
+				<li><a href="#" class="btn btn-default">Product</a></li>
+				<li><a href="#" class="btn btn-default">Product</a></li>
+				<li><a href="#" class="btn btn-default">Product</a></li>
+				<li><a href="#" class="btn btn-default">Product</a></li>
+				<li><a href="#" class="btn btn-default">Product</a></li>
+			</ul>
+		</div>
+	</wicket:extend>
+</body>
 </html>

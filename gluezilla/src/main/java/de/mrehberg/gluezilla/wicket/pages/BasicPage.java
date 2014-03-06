@@ -6,11 +6,11 @@
 
 package de.mrehberg.gluezilla.wicket.pages;
 
-import de.mrehberg.gluezilla.wicket.Resources;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.PriorityHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
+
+import de.mrehberg.gluezilla.wicket.Resources;
 
 /**
  *
@@ -18,10 +18,14 @@ import org.apache.wicket.markup.html.WebPage;
  */
 public abstract class BasicPage extends WebPage{
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1941762591345291206L;
+
+	@Override
     public void renderHead(IHeaderResponse response) {
-        response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.BOOTSTRAP_CSS)));
-        response.render(new PriorityHeaderItem(CssHeaderItem.forReference(Resources.MAIN_CSS)));
+        response.render(CssHeaderItem.forReference(Resources.MAIN_CSS));
         super.renderHead(response); 
     }
 }
