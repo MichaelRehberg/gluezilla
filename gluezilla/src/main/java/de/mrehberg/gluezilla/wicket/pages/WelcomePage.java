@@ -33,7 +33,7 @@ public class WelcomePage extends BrandedPage {
 		super.createNavbarContents(navbar);
 		
 		NavbarButton<WelcomePage> browse = new NavbarButton<WelcomePage>(WelcomePage.class, Model.of("Browse"));
-		NavbarButton<BrandedPage> create = new NavbarButton<BrandedPage>(BrandedPage.class, Model.of("Create"));
+		NavbarButton<BrandedPage> create = new NavbarButton<BrandedPage>(EditProductPage.class, Model.of("Create"));
 		NavbarButton<BrandedPage> review = new NavbarButton<BrandedPage>(BrandedPage.class, Model.of("Review"));
 		
 		List<INavbarComponent> list = NavbarComponents.transform(ComponentPosition.LEFT, browse, create, review);

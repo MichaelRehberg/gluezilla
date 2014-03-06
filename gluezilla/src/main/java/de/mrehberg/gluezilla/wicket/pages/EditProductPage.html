@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+	xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd"
+	lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gluezilla</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container">
+			<div class="col-md-6">
+				<div class="row">
+					<h2>Edit Product</h2>
+					<form role="form" class="form-horizontal" wicket:id="product-form">
+						<div wicket:id="name-group">
+							<input type="text" wicket:id="name" placeholder="Name">
+						</div>
+						<div wicket:id="description-group">
+							<input type="text" wicket:id="description"
+								placeholder="short description">
+						</div>
+						<div wicket:id="upload-group">
+							<input type="file" wicket:id="image-upload">
+						</div>
+						<button type="submit" wicket:id="submit">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

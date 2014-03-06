@@ -11,6 +11,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
+import de.mrehberg.gluezilla.wicket.pages.EditProductPage;
 import de.mrehberg.gluezilla.wicket.pages.WelcomePage;
 
 /**
@@ -30,6 +31,8 @@ public class GluezillaApplication extends WebApplication {
     	BootstrapSettings bootstrapSettings = new BootstrapSettings();
     	bootstrapSettings.setCssResourceReference(Resources.BOOTSTRAP_CSS);
     	Bootstrap.install(this,bootstrapSettings);
+    	
+    	mountPage("/product", EditProductPage.class);
     }
     
     
