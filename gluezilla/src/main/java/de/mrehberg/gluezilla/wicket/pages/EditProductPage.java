@@ -1,5 +1,7 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.Model;
@@ -11,6 +13,11 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormGroup;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior.Size;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.INavbarComponent;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.ComponentPosition;
 
 public class EditProductPage extends BrandedPage {
 	
@@ -46,4 +53,16 @@ public class EditProductPage extends BrandedPage {
 		add(form);
 	}
 
+	
+	@Override
+	protected void createNavbarContents(Navbar navbar) {
+		super.createNavbarContents(navbar);
+		
+		NavbarButton<WelcomePage> browse = new NavbarButton<WelcomePage>(WelcomePage.class, Model.of("Browse"));
+		NavbarButton<BrandedPage> create = new NavbarButton<BrandedPage>(EditProductPage.class, Model.of("Create"));
+		
+		List<INavbarComponent> list = NavbarComponents.transform(ComponentPosition.LEFT, browse, create);
+		navbar.addComponents(list);
+	}
+	
 }
