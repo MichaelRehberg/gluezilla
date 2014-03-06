@@ -15,4 +15,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 public class Resources {
     public static final ResourceReference MAIN_CSS = new ContextRelativeResourceReference("main.css");
     public static final ResourceReference BOOTSTRAP_CSS = new ContextRelativeResourceReference("bootstrap/css/bootstrap.min.css");
+    
+    public static final ResourceReference IMAGE_LOGO = new ContextRelativeResourceReference("logo.svg");
+    
 }
