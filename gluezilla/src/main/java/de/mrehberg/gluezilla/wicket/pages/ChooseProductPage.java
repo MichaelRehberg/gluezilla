@@ -51,10 +51,5 @@ public class ChooseProductPage extends BrandedPage {
             }
         });
     }
-    
-    @Override
-    protected Component createSidebar(String id) {
-        return new WebMarkupContainer(id).setVisible(false);
-    }
 
 }

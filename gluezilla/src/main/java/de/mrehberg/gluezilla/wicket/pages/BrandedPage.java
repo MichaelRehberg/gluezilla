@@ -10,7 +10,6 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
@@ -22,8 +21,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.GluezillaApplication;
-import de.mrehberg.gluezilla.wicket.GluezillaSession;
 import de.mrehberg.gluezilla.wicket.Resources;
+import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
 
 public class BrandedPage extends WebPage {
 
@@ -102,14 +101,7 @@ public class BrandedPage extends WebPage {
     }
 
     protected Component createSidebar(String id) {
-        final WebMarkupContainer sidebar = new WebMarkupContainer("sidebar") {
-            @Override
-            public boolean isVisible() {
-                return getProduct() != null;
-            }
-        };
-        sidebar.add(new BookmarkablePageLink("chooseProductLink", ChooseProductPage.class));
-        return sidebar;
+        return new VersionSidebar(id, getProduct());
     }
 
 }
