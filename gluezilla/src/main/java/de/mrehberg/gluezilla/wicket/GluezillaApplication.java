@@ -6,9 +6,17 @@
 
 package de.mrehberg.gluezilla.wicket;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.entities.GVersion;
 import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
+import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
 import de.mrehberg.gluezilla.wicket.pages.CreatePage;
 import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -16,6 +24,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.mrehberg.gluezilla.wicket.pages.EditProductPage;
+
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 
@@ -34,15 +43,15 @@ public class GluezillaApplication extends WebApplication {
         
         getComponentInstantiationListeners().add(new RequireProductListener());
         
-        mountPage("/browse", BrowsePage.class);
+        mountPage("/product", BrowsePage.class);
         mountPage("/create", CreatePage.class);
         mountPage("/review", ReviewPage.class);
-    	mountPage("/product", EditProductPage.class);
+    	mountPage("/new", EditProductPage.class);
     }
     
     @Override
     public Class<? extends Page> getHomePage() {
-        return BrowsePage.class;
+        return ChooseProductPage.class;
     }
 
     @Override
@@ -50,5 +59,34 @@ public class GluezillaApplication extends WebApplication {
         return new GluezillaSession(request);
     }
     
+   
+    
+    /**
+	 * just for testing. Remove when DB is set up		
+	 */
+    public static List<GProduct> SAMPLE_PRODUCTS = createSampleProducts("Foo","Bar","BIS","Firefox");
+    
+    /**
+	 * just for testing. Remove when DB is set up		
+	 */
+    private static List<GProduct> createSampleProducts(String... names) {
+    	Random r = new Random();
+    	
+    	List<GProduct> result = new ArrayList<>(names.length);
+    	for (int i = 0; i < names.length; i++) {
+    		GProduct product = new GProduct();
+    		product.setProductName(names[i]);
+    		
+    		int numVersions = r.nextInt(10)+1;
+    		List<GVersion> versions = new ArrayList<>(numVersions);
+    		for (int j = 0; j < numVersions; j++) {
+				GVersion version = new GVersion(String.valueOf(j), product);
+				versions.add(version);
+			}
+    		product.getVersions().addAll(versions);
+    		result.add(product);
+		}
+    	return result;
+    }
 
 }

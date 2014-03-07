@@ -16,13 +16,32 @@
 
 package de.mrehberg.gluezilla.wicket.pages;
 
-import de.mrehberg.gluezilla.wicket.RequireProduct;
+import java.text.MessageFormat;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import de.mrehberg.gluezilla.entities.GProduct;
+
 
 /**
  *
  * @author mt
  */
-@RequireProduct
 public class BrowsePage extends BrandedPage {
+
+	private static final long serialVersionUID = -4829807264007202804L;
+	
+	public BrowsePage(PageParameters params) {
+		super(params);
+		GProduct product = getProduct();
+		if(product==null)
+			throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND);
+		String message = "Browse {0} fixes";
+		add(new Label("title", MessageFormat.format(message, product.getProductName())));
+	}
     
 }

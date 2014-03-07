@@ -1,13 +1,7 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
-import org.apache.wicket.model.Model;
+import javax.servlet.http.HttpServletResponse;
 
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.Position;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
-import de.mrehberg.gluezilla.wicket.GluezillaSession;
-import de.mrehberg.gluezilla.wicket.Resources;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
@@ -18,15 +12,32 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.Position;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
+import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.wicket.GluezillaApplication;
+import de.mrehberg.gluezilla.wicket.GluezillaSession;
+import de.mrehberg.gluezilla.wicket.Resources;
 
 public class BrandedPage extends WebPage {
 
     private static final long serialVersionUID = 8057157977690204059L;
 
     private final WebMarkupContainer content;
+    
+    private transient GProduct product;
 
-    public BrandedPage() {
-        Navbar navbar = new Navbar("navbar");
+    public BrandedPage(PageParameters params) {
+    	super(params);
+    	product = getProduct(params);
+    	
+    	Navbar navbar = new Navbar("navbar");
         navbar.setInverted(true);
         navbar.setPosition(Position.TOP);
         navbar.brandName(Model.of("Gluezilla"));
@@ -45,18 +56,38 @@ public class BrandedPage extends WebPage {
             }
         }));
         super.add(content);
+
+    }
+    
+    public BrandedPage() {
+    	this(new PageParameters());
     }
 
     @Override
     public MarkupContainer add(Component... childs) {
         return content.add(childs);
     }
+    
+	protected GProduct getProduct(PageParameters params) {
+		if(params.getIndexedCount()==0)
+			return null;
+		String productName = params.get(0).toString();
+		for (GProduct product : GluezillaApplication.SAMPLE_PRODUCTS) {
+			if(productName.equals(product.getProductName()))
+				return product;
+		}
+		throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND,productName);
+	}
 
     @Override
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(Resources.MAIN_CSS));
         super.renderHead(response);
     }
+    
+    public GProduct getProduct() {
+		return product;
+	}
 
     protected void createNavbarContents(Navbar navbar) {
         NavbarButton<Page> menu[] = new NavbarButton[]{
@@ -74,7 +105,7 @@ public class BrandedPage extends WebPage {
         final WebMarkupContainer sidebar = new WebMarkupContainer("sidebar") {
             @Override
             public boolean isVisible() {
-                return GluezillaSession.get().getSelectedProduct() != null;
+                return getProduct() != null;
             }
         };
         sidebar.add(new BookmarkablePageLink("chooseProductLink", ChooseProductPage.class));

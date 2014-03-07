@@ -15,17 +15,18 @@
  */
 package de.mrehberg.gluezilla.wicket.pages;
 
-import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.wicket.GluezillaSession;
-import java.util.Arrays;
 import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.wicket.GluezillaApplication;
 
 /**
  *
@@ -33,23 +34,24 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class ChooseProductPage extends BrandedPage {
 
-    public ChooseProductPage() {
-        List<GProduct> products = Arrays.asList(new GProduct(), new GProduct(), new GProduct(), new GProduct(), new GProduct());
+	
+	private static final long serialVersionUID = 4760553396916413691L;
+
+	public ChooseProductPage() {
+        List<GProduct> products = GluezillaApplication.SAMPLE_PRODUCTS;
         add(new ListView<GProduct>("products", products) {
-            @Override
+            
+			private static final long serialVersionUID = -3993516077236429657L;
+
+			@Override
             protected void populateItem(final ListItem<GProduct> item) {
-                item.add(new Link("button") {
-                    @Override
-                    public void onClick() {
-                        GluezillaSession.get().setSelectedProduct(item.getModelObject());
-                        continueToOriginalDestination();
-                        setResponsePage(WebApplication.get().getHomePage());
-                    }
-                }.add(new Label("name", "Product")));
+				BookmarkablePageLink<Object> link = new BookmarkablePageLink<>("button", BrowsePage.class, new PageParameters().set(0, item.getModelObject().getProductName()));
+				link.setBody(Model.of(item.getModelObject().getProductName()));
+				item.add(link);
             }
         });
     }
-
+    
     @Override
     protected Component createSidebar(String id) {
         return new WebMarkupContainer(id).setVisible(false);
