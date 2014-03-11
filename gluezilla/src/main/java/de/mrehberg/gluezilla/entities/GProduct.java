@@ -25,6 +25,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Michael Rehberg
  */
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "productName" }) })
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GProduct implements Serializable, Identifiable {
