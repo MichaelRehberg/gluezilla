@@ -81,5 +81,9 @@ public class GProduct implements Serializable {
     {
 		this.imageResource = image;
     }
-    
+ 
+    public byte[] getImage()
+    {
+		return imageResource;
+    }
 }
