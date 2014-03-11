@@ -32,33 +32,38 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 /**
- *
+ * 
  * @author rehberg
  */
 @Stateless
 @Path("/version")
 public class GVersionResource {
 
-    @PersistenceContext
-    EntityManager manager;
+	@PersistenceContext
+	EntityManager manager;
 
-    @GET
-    public List<GVersion> getGVersions(@QueryParam("p") int productId) {
-        GProduct product = manager.find(GProduct.class, productId);
-        if(product == null)
-            throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Product required").build());
+	@GET
+	public List<GVersion> getGVersions(@QueryParam("p") int productId) {
+		GProduct product = manager.find(GProduct.class, productId);
+		if (product == null)
+			throw new WebApplicationException(Response
+					.status(Status.BAD_REQUEST).entity("Product required")
+					.build());
 
-        return product.getVersions();
-    }
+		return product.getVersions();
+	}
 
-    @POST
-    public int createGVersion(@FormParam(value = "n") String name, @FormParam(value ="p") int productID) {
-        GProduct product = manager.find(GProduct.class, productID);
-        if(product == null)
-            throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity("Product required").build());
-        
-        GVersion gVersion = new GVersion(name, product);
-        manager.persist(gVersion);
-        return gVersion.getId();
-    }
+	@POST
+	public int createGVersion(@FormParam(value = "n") String name,
+			@FormParam(value = "p") int productID) {
+		GProduct product = manager.find(GProduct.class, productID);
+		if (product == null)
+			throw new WebApplicationException(Response
+					.status(Status.BAD_REQUEST).entity("Product required")
+					.build());
+
+		GVersion gVersion = new GVersion(name, product);
+		manager.persist(gVersion);
+		return gVersion.getId();
+	}
 }

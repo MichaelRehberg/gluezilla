@@ -16,8 +16,8 @@
 
 package de.mrehberg.gluezilla.rest;
 
-import de.mrehberg.gluezilla.entities.GProduct;
 import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,40 +26,59 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import de.mrehberg.gluezilla.entities.GProduct;
 
 /**
- *
+ * 
  * @author rehberg
  */
 @Stateless
 @Path("/product")
 public class GProductResource {
-    
-    @PersistenceContext
-    EntityManager manager;
-    
-    @GET
-    public GProduct getProduct(@QueryParam(value = "p") int productId)
-    {
-        GProduct product = manager.find(GProduct.class, productId);
-        return product;
-    }
-    
-    @GET
-    @Path("all")
-    public List<GProduct> getProducts()
-    {
-        return manager.createQuery("SELECT p from GProduct p").getResultList();
-    }
-    
-    
-    @POST
-    public int createProduct(@FormParam(value = "n") String name, @FormParam(value ="d") String description)
-    {
-        GProduct gProduct = new GProduct();
-        gProduct.setProductName(name);
-        gProduct.setProductDescription(description);
-        manager.persist(gProduct);
-        return gProduct.getProductID();
-    }
+
+	@PersistenceContext
+	EntityManager manager;
+
+	@GET
+	public GProduct getProduct(@QueryParam(value = "p") int productId) {
+
+		GProduct product = manager.find(GProduct.class, productId);
+
+		if (product == null)
+			throw new WebApplicationException(
+					Response.status(Status.BAD_REQUEST)
+							.entity("Product witn id=" + productId
+									+ " does not exist!").build());
+		return product;
+	}
+
+	@GET
+	@Path("all")
+	public List<GProduct> getProducts() {
+		return manager.createQuery("SELECT p from GProduct p").getResultList();
+	}
+
+	@POST
+	public int createProduct(@FormParam(value = "n") String name,
+			@FormParam(value = "d") String description) {
+		if (name == null)
+			throw new WebApplicationException(Response
+					.status(Status.BAD_REQUEST).entity("Product name required")
+					.build());
+
+		if (description == null)
+			throw new WebApplicationException(Response
+					.status(Status.BAD_REQUEST)
+					.entity("Product description required").build());
+
+		GProduct gProduct = new GProduct();
+		gProduct.setProductName(name);
+		gProduct.setProductDescription(description);
+		manager.persist(gProduct);
+		return gProduct.getProductID();
+	}
 }

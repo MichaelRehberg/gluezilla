@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 rehberg.
+ * Copyright 2014 Michael Rehberg.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author rehberg
+ * @author Michael Rehberg
  */
 @Entity
 @XmlRootElement
