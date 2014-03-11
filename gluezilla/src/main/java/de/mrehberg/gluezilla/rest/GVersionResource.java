@@ -64,6 +64,6 @@ public class GVersionResource {
 
 		GVersion gVersion = new GVersion(name, product);
 		manager.persist(gVersion);
-		return gVersion.getId();
+		return gVersion.getID();
 	}
 }

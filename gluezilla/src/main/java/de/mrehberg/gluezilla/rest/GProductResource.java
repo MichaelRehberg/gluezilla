@@ -79,6 +79,6 @@ public class GProductResource {
 		gProduct.setProductName(name);
 		gProduct.setProductDescription(description);
 		manager.persist(gProduct);
-		return gProduct.getProductID();
+		return gProduct.getID();
 	}
 }

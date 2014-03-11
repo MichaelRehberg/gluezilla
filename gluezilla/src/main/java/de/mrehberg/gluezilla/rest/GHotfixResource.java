@@ -91,7 +91,7 @@ public class GHotfixResource {
 			hf.addIssue(gIssueTrackingItem);
 		}
 		manager.persist(hf);
-		return hf.getId();
+		return hf.getID();
 	}
 
 }

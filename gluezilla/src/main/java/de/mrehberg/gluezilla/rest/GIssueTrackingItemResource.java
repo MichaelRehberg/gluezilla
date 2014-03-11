@@ -81,6 +81,6 @@ public class GIssueTrackingItemResource {
 		item.setIssueTrackingSystemID(name);
 		item.setIssueTrackingSystemDescription(description);
 		manager.persist(item);
-		return item.getId();
+		return item.getID();
 	}
 }

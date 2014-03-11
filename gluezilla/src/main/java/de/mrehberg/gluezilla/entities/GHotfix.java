@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GHotfix {
+public class GHotfix implements Identifyable {
 
 	@Id
 	@GeneratedValue
@@ -63,12 +63,12 @@ public class GHotfix {
 
 	private int counter;
 
-	public GHotfix()
-	{}
-	
+	public GHotfix() {
+	}
+
 	public GHotfix(GVersion version, int counter) {
 		String name = version.getName();
-		this.versionID = version.getId();
+		this.versionID = version.getID();
 		glueID = name + "-" + counter;
 
 	}
@@ -76,7 +76,8 @@ public class GHotfix {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	@Override
+	public int getID() {
 		return id;
 	}
 

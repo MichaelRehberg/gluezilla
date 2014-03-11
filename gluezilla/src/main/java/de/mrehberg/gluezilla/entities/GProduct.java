@@ -31,59 +31,58 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * 
  * @author Michael Rehberg
  */
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GProduct implements Serializable {
-    
-    @Id @GeneratedValue
-    private int id;
-    
-    @OneToMany(mappedBy = "product")
-    @XmlTransient
-    private List<GVersion> versions = new ArrayList<GVersion>();
-    
-    @Lob
-    private byte[] imageResource;
-    
-    private String productName;
-    
-    private String productDescription;
+public class GProduct implements Serializable, Identifyable {
 
-    public int getProductID() {
-        return id;
-    }
+	@Id
+	@GeneratedValue
+	private int id;
 
-    public String getProductName() {
-        return productName;
-    }
+	@OneToMany(mappedBy = "product")
+	@XmlTransient
+	private List<GVersion> versions = new ArrayList<GVersion>();
 
-    public String getProductDescription() {
-        return productDescription;
-    }
+	@Lob
+	private byte[] imageResource;
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+	private String productName;
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
+	private String productDescription;
 
-    public List<GVersion> getVersions() {
-        return versions;
-    }
-    
-    public void setImage(byte[] image)
-    {
+	public int getID() {
+		return id;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public List<GVersion> getVersions() {
+		return versions;
+	}
+
+	public void setImage(byte[] image) {
 		this.imageResource = image;
-    }
- 
-    public byte[] getImage()
-    {
+	}
+
+	public byte[] getImage() {
 		return imageResource;
-    }
+	}
 }

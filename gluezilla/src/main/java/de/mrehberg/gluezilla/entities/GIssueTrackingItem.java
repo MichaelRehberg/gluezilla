@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GIssueTrackingItem {
+public class GIssueTrackingItem implements Identifyable {
 
 	@Id
 	@GeneratedValue
@@ -45,10 +45,10 @@ public class GIssueTrackingItem {
 
 	@XmlAttribute
 	private String issueTrackingSystemID;
-	
+
 	@ManyToMany
 	private List<GHotfix> hotfixes;
-	
+
 	@XmlAttribute
 	private String issueTrackingSystemDescription;
 
@@ -101,7 +101,8 @@ public class GIssueTrackingItem {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	@Override
+	public int getID() {
 		return id;
 	}
 

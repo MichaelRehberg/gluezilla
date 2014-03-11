@@ -28,59 +28,59 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * 
  * @author Michael Rehberg
  */
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GVersion implements Serializable {
-    
-    @Id @GeneratedValue
-    @XmlElement
-    private int id;
-    
-    @ManyToOne
-    @XmlTransient
-    private GProduct product;
-    
-    @XmlElement
-    private String name;
-    
-    @XmlElement
-    private boolean deprecated;
-    
-    public GVersion()
-    {}
-    
-    public GVersion(String name, GProduct product)
-    {
-        this.name = name;
-        this.product = product;
-    }
+public class GVersion implements Serializable, Identifyable {
 
-    public int getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue
+	@XmlElement
+	private int id;
 
-    public String getName() {
-        return name;
-    }
+	@ManyToOne
+	@XmlTransient
+	private GProduct product;
 
-    public boolean isDeprecated() {
-        return deprecated;
-    }
+	@XmlElement
+	private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@XmlElement
+	private boolean deprecated;
 
-    public void setDeprecated(boolean deprecated) {
-        this.deprecated = deprecated;
-    }
+	public GVersion() {
+	}
 
-    public GProduct getProduct() {
-        return product;
-    }
+	public GVersion(String name, GProduct product) {
+		this.name = name;
+		this.product = product;
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public boolean isDeprecated() {
+		return deprecated;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		this.deprecated = deprecated;
+	}
+
+	public GProduct getProduct() {
+		return product;
+	}
 
 }
