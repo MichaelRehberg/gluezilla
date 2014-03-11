@@ -56,8 +56,8 @@ public class GHotfixResource {
 	public List<GHotfix> getAllGItemsOfVersion(
 			@QueryParam(value = "v") int versionID) {
 		return manager.createQuery(
-				"Select hf from GHotfix hf where hf.version = '" + versionID
-						+ "'").getResultList();
+				"Select hf from GHotfix hf where hf.versionID=" + versionID)
+				.getResultList();
 	}
 
 	@POST
