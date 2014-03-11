@@ -26,6 +26,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -46,13 +47,14 @@ public class GHotfixResource {
 	EntityManager manager;
 
 	@GET
+	@Path("all")
 	public List<GHotfix> getAllGItems() {
 		return manager.createQuery("Select hf from GHotfix hf").getResultList();
 	}
 
 	@GET
 	public List<GHotfix> getAllGItemsOfVersion(
-			@FormParam(value = "v") int versionID) {
+			@QueryParam(value = "v") int versionID) {
 		return manager.createQuery(
 				"Select hf from GHotfix hf where hf.version = '" + versionID
 						+ "'").getResultList();

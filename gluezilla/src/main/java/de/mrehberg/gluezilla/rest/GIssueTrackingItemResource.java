@@ -43,14 +43,14 @@ public class GIssueTrackingItemResource {
 	EntityManager manager;
 
 	@GET
-	public GIssueTrackingItem getGIssueItem(
-			@QueryParam(value = "i") int issueTrackingItemID) {
+	public GIssueTrackingItem getGIssueItem(@QueryParam(value = "i") int issueTrackingItemID) {
 		GIssueTrackingItem issueItem = manager.find(GIssueTrackingItem.class,
 				issueTrackingItemID);
 		return issueItem;
 	}
 
 	@GET
+	@Path("all")
 	public List<GIssueTrackingItem> getAllGIssueItem() {
 		List<GIssueTrackingItem> resultList = manager.createQuery(
 				"Select git from GIssueTrackingItem git").getResultList();
