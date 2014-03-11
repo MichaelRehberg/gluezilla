@@ -20,11 +20,11 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.Position;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 import de.mrehberg.gluezilla.business.GluezillaFacade;
+import de.mrehberg.gluezilla.business.NotFoundException;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.Resources;
 import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import org.apache.wicket.model.IModel;
 
 public class BrandedPage extends WebPage {
@@ -87,7 +87,7 @@ public class BrandedPage extends WebPage {
         String productName = params.get(0).toString();
         try {
             return ejb.getProductByName(productName);
-        } catch (NoResultException e) {
+        } catch (NotFoundException e) {
             throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND, productName);
         }
     }

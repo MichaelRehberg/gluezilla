@@ -32,8 +32,12 @@ public class GluezillaFacade {
         return manager.createQuery("SELECT p from GProduct p").getResultList();
     }
 
-    public GProduct getProductByName(String name) throws NoResultException {
-        return manager.createQuery("SELECT p from GProduct p WHERE p.productName=?1", GProduct.class)
-                .setParameter(1, name).getSingleResult();
+    public GProduct getProductByName(String name) throws NotFoundException {
+        try {
+            return manager.createQuery("SELECT p from GProduct p WHERE p.productName=?1", GProduct.class)
+                    .setParameter(1, name).getSingleResult();
+        } catch (NoResultException e) {
+            throw new NotFoundException();
+        }
     }
 }
