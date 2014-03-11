@@ -23,6 +23,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.mrehberg.gluezilla.wicket.pages.EditProductPage;
+import org.apache.wicket.cdi.ExtendedCdiConfiguration;
 
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -36,7 +37,9 @@ public class GluezillaApplication extends WebApplication {
     @Override
     protected void init() {
         super.init();
-    	BootstrapSettings bootstrapSettings = new BootstrapSettings();
+        new ExtendedCdiConfiguration().configure(this);
+
+        BootstrapSettings bootstrapSettings = new BootstrapSettings();
     	bootstrapSettings.setCssResourceReference(Resources.BOOTSTRAP_CSS);
     	Bootstrap.install(this, bootstrapSettings);
         
