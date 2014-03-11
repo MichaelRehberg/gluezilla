@@ -13,6 +13,7 @@ import java.util.Random;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.entities.GVersion;
 import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
+import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
 import de.mrehberg.gluezilla.wicket.pages.CreatePage;
 import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
 
@@ -51,7 +52,7 @@ public class GluezillaApplication extends WebApplication {
     
     @Override
     public Class<? extends Page> getHomePage() {
-        return BrowsePage.class;
+        return ChooseProductPage.class;
     }
 
     @Override

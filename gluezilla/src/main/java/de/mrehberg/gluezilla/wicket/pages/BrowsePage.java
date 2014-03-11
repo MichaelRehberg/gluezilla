@@ -36,7 +36,7 @@ public class BrowsePage extends BrandedPage {
         super(params);
         GProduct product = getProduct();
         if (product == null) {
-            throw new RestartResponseAtInterceptPageException(ChooseProductPage.class, ChooseProductPage.linkTo(getClass()));
+            throw new RestartResponseAtInterceptPageException(ChooseProductPage.class);
         }
         String message = "Browse {0} fixes";
         add(new Label("title", MessageFormat.format(message, product.getProductName())));

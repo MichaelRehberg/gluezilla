@@ -15,20 +15,19 @@
  */
 package de.mrehberg.gluezilla.wicket.pages;
 
-import de.mrehberg.gluezilla.business.GluezillaFacade;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
-import javax.inject.Inject;
-import org.apache.wicket.Application;
-import org.apache.wicket.Page;
-import org.apache.wicket.util.string.StringValue;
 
 /**
  *
@@ -37,15 +36,10 @@ import org.apache.wicket.util.string.StringValue;
 public class ChooseProductPage extends BrandedPage {
 
     private static final long serialVersionUID = 4760553396916413691L;
-    private static final String TARGET_PARAM = "target";
 
     @Inject
     GluezillaFacade ejb;
     
-    public static PageParameters linkTo(Class<?> targetPage) {
-        return new PageParameters().add(TARGET_PARAM, targetPage.getName());
-    }
-
     public ChooseProductPage(PageParameters params) {
         clearOriginalDestination();
         final Class<? extends Page> target = getTarget(params);
@@ -65,14 +59,6 @@ public class ChooseProductPage extends BrandedPage {
     }
 
     private Class<? extends Page> getTarget(PageParameters params) {
-        final StringValue targetParam = params.get(TARGET_PARAM);
-        if (!targetParam.isNull() && !targetParam.isEmpty()) {
-            try {
-                return (Class<? extends Page>) Class.forName(targetParam.toString());
-            } catch (Exception e) {
-                // ignore, use safe default
-            }
-        }
-        return Application.get().getHomePage();
+    	return BrowsePage.class;
     }
 }
