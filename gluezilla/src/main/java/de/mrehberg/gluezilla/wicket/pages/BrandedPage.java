@@ -23,20 +23,25 @@ import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.GluezillaApplication;
 import de.mrehberg.gluezilla.wicket.Resources;
 import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
+import org.apache.wicket.model.IModel;
 
 public class BrandedPage extends WebPage {
 
     private static final long serialVersionUID = 8057157977690204059L;
 
     private final WebMarkupContainer content;
-    
-    private transient GProduct product;
+
+    private IModel<GProduct> product;
+
+    public BrandedPage() {
+        this(new PageParameters());
+    }
 
     public BrandedPage(PageParameters params) {
-    	super(params);
-    	product = getProduct(params);
-    	
-    	Navbar navbar = new Navbar("navbar");
+        super(params);
+        product = Model.of(getProduct(params));
+
+        Navbar navbar = new Navbar("navbar");
         navbar.setInverted(true);
         navbar.setPosition(Position.TOP);
         navbar.brandName(Model.of("Gluezilla"));
@@ -57,36 +62,41 @@ public class BrandedPage extends WebPage {
         super.add(content);
 
     }
-    
-    public BrandedPage() {
-    	this(new PageParameters());
+
+    @Override
+    protected void detachModel() {
+        product.detach();
+        super.detachModel();
     }
 
+    
     @Override
     public MarkupContainer add(Component... childs) {
         return content.add(childs);
     }
-    
-	protected GProduct getProduct(PageParameters params) {
-		if(params.getIndexedCount()==0)
-			return null;
-		String productName = params.get(0).toString();
-		for (GProduct product : GluezillaApplication.SAMPLE_PRODUCTS) {
-			if(productName.equals(product.getProductName()))
-				return product;
-		}
-		throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND,productName);
-	}
+
+    protected GProduct getProduct(PageParameters params) {
+        if (params.getIndexedCount() == 0) {
+            return null;
+        }
+        String productName = params.get(0).toString();
+        for (GProduct product : GluezillaApplication.SAMPLE_PRODUCTS) {
+            if (productName.equals(product.getProductName())) {
+                return product;
+            }
+        }
+        throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND, productName);
+    }
 
     @Override
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(Resources.MAIN_CSS));
         super.renderHead(response);
     }
-    
+
     public GProduct getProduct() {
-		return product;
-	}
+        return product.getObject();
+    }
 
     protected void createNavbarContents(Navbar navbar) {
         NavbarButton<Page> menu[] = new NavbarButton[]{

@@ -15,7 +15,6 @@
  */
 package de.mrehberg.gluezilla.wicket;
 
-import de.mrehberg.gluezilla.entities.GProduct;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
@@ -29,18 +28,8 @@ public class GluezillaSession extends WebSession {
         return (GluezillaSession) WebSession.get();
     }
 
-    private GProduct selectedProduct = null;
-
     public GluezillaSession(Request request) {
         super(request);
-    }
-
-    public GProduct getSelectedProduct() {
-        return selectedProduct;
-    }
-
-    public void setSelectedProduct(GProduct selectedProduct) {
-        this.selectedProduct = selectedProduct;
     }
 
 }

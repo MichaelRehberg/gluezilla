@@ -16,6 +16,7 @@
 
 package de.mrehberg.gluezilla.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -26,7 +27,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GProduct {
+public class GProduct implements Serializable {
     
     @Id @GeneratedValue
     private int id;

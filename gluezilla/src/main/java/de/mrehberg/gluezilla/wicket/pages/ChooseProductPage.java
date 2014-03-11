@@ -17,8 +17,6 @@ package de.mrehberg.gluezilla.wicket.pages;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -27,6 +25,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.GluezillaApplication;
+import org.apache.wicket.Application;
+import org.apache.wicket.Page;
+import org.apache.wicket.util.string.StringValue;
 
 /**
  *
@@ -34,22 +35,40 @@ import de.mrehberg.gluezilla.wicket.GluezillaApplication;
  */
 public class ChooseProductPage extends BrandedPage {
 
-	
-	private static final long serialVersionUID = 4760553396916413691L;
+    private static final long serialVersionUID = 4760553396916413691L;
+    private static final String TARGET_PARAM = "target";
 
-	public ChooseProductPage() {
-        List<GProduct> products = GluezillaApplication.SAMPLE_PRODUCTS;
+    public static PageParameters linkTo(Class<?> targetPage) {
+        return new PageParameters().add(TARGET_PARAM, targetPage.getName());
+    }
+
+    public ChooseProductPage(PageParameters params) {
+        clearOriginalDestination();
+        final Class<? extends Page> target = getTarget(params);
+        
+        final List<GProduct> products = GluezillaApplication.SAMPLE_PRODUCTS;
         add(new ListView<GProduct>("products", products) {
-            
-			private static final long serialVersionUID = -3993516077236429657L;
 
-			@Override
+            private static final long serialVersionUID = -3993516077236429657L;
+
+            @Override
             protected void populateItem(final ListItem<GProduct> item) {
-				BookmarkablePageLink<Object> link = new BookmarkablePageLink<>("button", BrowsePage.class, new PageParameters().set(0, item.getModelObject().getProductName()));
-				link.setBody(Model.of(item.getModelObject().getProductName()));
-				item.add(link);
+                BookmarkablePageLink<?> link = new BookmarkablePageLink<>("button", target, new PageParameters().set(0, item.getModelObject().getProductName()));
+                link.setBody(Model.of(item.getModelObject().getProductName()));
+                item.add(link);
             }
         });
     }
 
+    private Class<? extends Page> getTarget(PageParameters params) {
+        final StringValue targetParam = params.get(TARGET_PARAM);
+        if (!targetParam.isNull() && !targetParam.isEmpty()) {
+            try {
+                return (Class<? extends Page>) Class.forName(targetParam.toString());
+            } catch (Exception e) {
+                // ignore, use safe default
+            }
+        }
+        return Application.get().getHomePage();
+    }
 }

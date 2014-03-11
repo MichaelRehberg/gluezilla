@@ -13,7 +13,6 @@ import java.util.Random;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.entities.GVersion;
 import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
-import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
 import de.mrehberg.gluezilla.wicket.pages.CreatePage;
 import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
 
@@ -41,8 +40,6 @@ public class GluezillaApplication extends WebApplication {
     	bootstrapSettings.setCssResourceReference(Resources.BOOTSTRAP_CSS);
     	Bootstrap.install(this, bootstrapSettings);
         
-        getComponentInstantiationListeners().add(new RequireProductListener());
-        
         mountPage("/product", BrowsePage.class);
         mountPage("/create", CreatePage.class);
         mountPage("/review", ReviewPage.class);
@@ -51,7 +48,7 @@ public class GluezillaApplication extends WebApplication {
     
     @Override
     public Class<? extends Page> getHomePage() {
-        return ChooseProductPage.class;
+        return BrowsePage.class;
     }
 
     @Override

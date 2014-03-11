@@ -16,13 +16,10 @@
 
 package de.mrehberg.gluezilla.wicket.pages;
 
-import de.mrehberg.gluezilla.wicket.RequireProduct;
-
 /**
  *
  * @author mt
  */
-@RequireProduct
 public class ReviewPage extends BrandedPage {
     
 }
