@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GHotfix implements Identifyable {
+public class GHotfix implements Identifiable {
 
 	@Id
 	@GeneratedValue

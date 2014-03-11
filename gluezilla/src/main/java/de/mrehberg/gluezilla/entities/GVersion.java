@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GVersion implements Serializable, Identifyable {
+public class GVersion implements Serializable, Identifiable {
 
 	@Id
 	@GeneratedValue

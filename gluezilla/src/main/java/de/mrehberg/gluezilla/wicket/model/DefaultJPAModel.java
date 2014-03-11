@@ -8,13 +8,13 @@ import javax.persistence.EntityManager;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-import de.mrehberg.gluezilla.entities.Identifyable;
+import de.mrehberg.gluezilla.entities.Identifiable;
 
 /**
  * @author joe
  *
  */
-public class DefaultJPAModel<T extends Identifyable> extends LoadableDetachableModel<T> {
+public class DefaultJPAModel<T extends Identifiable> extends LoadableDetachableModel<T> {
 
 	@Inject
 	private EntityManager entityManager;
@@ -35,7 +35,7 @@ public class DefaultJPAModel<T extends Identifyable> extends LoadableDetachableM
 		return entityManager.getReference(type, primaryKey);
 	}
 	
-	public static <T extends Identifyable> DefaultJPAModel<T> of(T object) {
+	public static <T extends Identifiable> DefaultJPAModel<T> of(T object) {
 		return new DefaultJPAModel<T>(object);
 	}
 	

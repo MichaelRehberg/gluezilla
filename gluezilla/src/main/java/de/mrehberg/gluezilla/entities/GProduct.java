@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GProduct implements Serializable, Identifyable {
+public class GProduct implements Serializable, Identifiable {
 
 	@Id
 	@GeneratedValue

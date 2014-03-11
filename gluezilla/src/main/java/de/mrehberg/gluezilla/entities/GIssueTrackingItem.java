@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GIssueTrackingItem implements Identifyable {
+public class GIssueTrackingItem implements Identifiable {
 
 	@Id
 	@GeneratedValue

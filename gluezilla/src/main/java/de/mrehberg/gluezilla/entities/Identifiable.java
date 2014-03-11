@@ -15,14 +15,12 @@
  */
 package de.mrehberg.gluezilla.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * @author Michael Rehberg
  *
  */
-public interface Identifyable {
+public interface Identifiable {
 
 	/**
 	 * ID 
