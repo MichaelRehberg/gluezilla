@@ -58,35 +58,4 @@ public class GluezillaApplication extends WebApplication {
     public Session newSession(Request request, Response response) {
         return new GluezillaSession(request);
     }
-    
-   
-    
-    /**
-	 * just for testing. Remove when DB is set up		
-	 */
-    public static List<GProduct> SAMPLE_PRODUCTS = createSampleProducts("Foo","Bar","BIS","Firefox");
-    
-    /**
-	 * just for testing. Remove when DB is set up		
-	 */
-    private static List<GProduct> createSampleProducts(String... names) {
-    	Random r = new Random();
-    	
-    	List<GProduct> result = new ArrayList<>(names.length);
-    	for (int i = 0; i < names.length; i++) {
-    		GProduct product = new GProduct();
-    		product.setProductName(names[i]);
-    		
-    		int numVersions = r.nextInt(10)+1;
-    		List<GVersion> versions = new ArrayList<>(numVersions);
-    		for (int j = 0; j < numVersions; j++) {
-				GVersion version = new GVersion(String.valueOf(j), product);
-				versions.add(version);
-			}
-    		product.getVersions().addAll(versions);
-    		result.add(product);
-		}
-    	return result;
-    }
-
 }

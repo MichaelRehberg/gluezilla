@@ -19,10 +19,12 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.Position;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
+import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.wicket.GluezillaApplication;
 import de.mrehberg.gluezilla.wicket.Resources;
 import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
+import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import org.apache.wicket.model.IModel;
 
 public class BrandedPage extends WebPage {
@@ -33,6 +35,9 @@ public class BrandedPage extends WebPage {
 
     private IModel<GProduct> product;
 
+    @Inject
+    private GluezillaFacade ejb;
+    
     public BrandedPage() {
         this(new PageParameters());
     }
@@ -80,12 +85,11 @@ public class BrandedPage extends WebPage {
             return null;
         }
         String productName = params.get(0).toString();
-        for (GProduct product : GluezillaApplication.SAMPLE_PRODUCTS) {
-            if (productName.equals(product.getProductName())) {
-                return product;
-            }
+        try {
+            return ejb.getProductByName(productName);
+        } catch (NoResultException e) {
+            throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND, productName);
         }
-        throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND, productName);
     }
 
     @Override

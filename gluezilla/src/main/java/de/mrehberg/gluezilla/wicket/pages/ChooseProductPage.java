@@ -15,6 +15,7 @@
  */
 package de.mrehberg.gluezilla.wicket.pages;
 
+import de.mrehberg.gluezilla.business.GluezillaFacade;
 import java.util.List;
 
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -24,8 +25,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.rest.GProductResource;
-import de.mrehberg.gluezilla.wicket.GluezillaApplication;
 import javax.inject.Inject;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
@@ -41,7 +40,7 @@ public class ChooseProductPage extends BrandedPage {
     private static final String TARGET_PARAM = "target";
 
     @Inject
-    GProductResource ejb;
+    GluezillaFacade ejb;
     
     public static PageParameters linkTo(Class<?> targetPage) {
         return new PageParameters().add(TARGET_PARAM, targetPage.getName());
@@ -51,9 +50,7 @@ public class ChooseProductPage extends BrandedPage {
         clearOriginalDestination();
         final Class<? extends Page> target = getTarget(params);
         
-        ejb.getProducts();
-
-        final List<GProduct> products = GluezillaApplication.SAMPLE_PRODUCTS;
+        final List<GProduct> products = ejb.getAllProducts();
         add(new ListView<GProduct>("products", products) {
 
             private static final long serialVersionUID = -3993516077236429657L;

@@ -16,6 +16,7 @@
 
 package de.mrehberg.gluezilla.rest;
 
+import de.mrehberg.gluezilla.business.GluezillaFacade;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -31,6 +32,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import de.mrehberg.gluezilla.entities.GProduct;
+import javax.inject.Inject;
 
 /**
  * 
@@ -40,6 +42,9 @@ import de.mrehberg.gluezilla.entities.GProduct;
 @Path("/product")
 public class GProductResource {
 
+        @Inject
+        GluezillaFacade facade;
+        
 	@PersistenceContext
 	EntityManager manager;
 
@@ -59,7 +64,7 @@ public class GProductResource {
 	@GET
 	@Path("all")
 	public List<GProduct> getProducts() {
-		return manager.createQuery("SELECT p from GProduct p").getResultList();
+		return facade.getAllProducts();
 	}
 
 	@POST
