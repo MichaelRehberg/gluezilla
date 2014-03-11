@@ -23,6 +23,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -44,6 +45,9 @@ public class GProduct implements Serializable {
     @OneToMany(mappedBy = "product")
     @XmlTransient
     private List<GVersion> versions = new ArrayList<GVersion>();
+    
+    @Lob
+    private byte[] imageResource;
     
     private String productName;
     
@@ -71,6 +75,11 @@ public class GProduct implements Serializable {
 
     public List<GVersion> getVersions() {
         return versions;
+    }
+    
+    public void setImage(byte[] image)
+    {
+		this.imageResource = image;
     }
     
 }
