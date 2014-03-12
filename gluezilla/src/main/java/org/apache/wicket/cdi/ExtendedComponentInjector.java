@@ -36,7 +36,7 @@ public class ExtendedComponentInjector extends ComponentInjector {
             try {
                 super.inject(instance);
             } catch (IllegalArgumentException e) {
-                logger.info("UNSUPPORTED: " + className + " (WELD-000070 non-static inner class)");
+                logger.info("UNSUPPORTED: " + className + " (WELD-000070 non-static inner class)",e);
             }
         }
     }

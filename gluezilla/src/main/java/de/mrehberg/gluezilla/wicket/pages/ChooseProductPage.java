@@ -51,7 +51,7 @@ public class ChooseProductPage extends BrandedPage {
 
             @Override
             protected void populateItem(final ListItem<GProduct> item) {
-                BookmarkablePageLink<?> link = new BookmarkablePageLink<>("button", target, new PageParameters().set(0, item.getModelObject().getProductName()));
+                BookmarkablePageLink<?> link = new BookmarkablePageLink<>("button", target, getResolver().expand(item.getModelObject()));
                 link.setBody(Model.of(item.getModelObject().getProductName()));
                 item.add(link);
             }

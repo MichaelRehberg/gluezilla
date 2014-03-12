@@ -1,6 +1,6 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.inject.Inject;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
@@ -12,26 +12,23 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar.Position;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
-import de.mrehberg.gluezilla.business.GluezillaFacade;
-import de.mrehberg.gluezilla.business.NotFoundException;
-import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.Resources;
-import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
-import javax.inject.Inject;
-import org.apache.wicket.model.IModel;
+import de.mrehberg.gluezilla.wicket.util.EntityResolver;
 
 public class BrandedPage extends WebPage {
 
     private static final long serialVersionUID = 8057157977690204059L;
 
     private final WebMarkupContainer content;
+    
+	@Inject
+	private EntityResolver resolver;
     
     public BrandedPage() {
         this(new PageParameters());
@@ -77,7 +74,7 @@ public class BrandedPage extends WebPage {
     protected void createNavbarContents(Navbar navbar) {
         NavbarButton<Page> menu[] = new NavbarButton[]{
             new NavbarButton<Page>(BrowsePage.class, Model.of("Browse")),
-            new NavbarButton<Page>(CreatePage.class, Model.of("Create")),
+            new NavbarButton<Page>(EditProductPage.class, Model.of("Create")),
             new NavbarButton<Page>(ReviewPage.class, Model.of("Review"))
         };
         navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, menu));
@@ -91,5 +88,9 @@ public class BrandedPage extends WebPage {
         dummy.setVisible(false);
         return dummy;
     }
+    
+	public EntityResolver getResolver() {
+		return resolver;
+	}
 
 }

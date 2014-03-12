@@ -6,28 +6,22 @@
 
 package de.mrehberg.gluezilla.wicket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.entities.GVersion;
-import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
-import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
-import de.mrehberg.gluezilla.wicket.pages.CreatePage;
-import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
+import java.text.MessageFormat;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
+import org.apache.wicket.cdi.ExtendedCdiConfiguration;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
+import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
+import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
 import de.mrehberg.gluezilla.wicket.pages.EditProductPage;
-import org.apache.wicket.cdi.ExtendedCdiConfiguration;
-
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.Response;
+import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
+import de.mrehberg.gluezilla.wicket.util.EntityResolver;
 
 /**
  *
@@ -44,8 +38,7 @@ public class GluezillaApplication extends WebApplication {
     	bootstrapSettings.setCssResourceReference(Resources.BOOTSTRAP_CSS);
     	Bootstrap.install(this, bootstrapSettings);
         
-        mountPage("/product", BrowsePage.class);
-        mountPage("/create", CreatePage.class);
+        mountPage(MessageFormat.format("/product/$'{'{0}'}'",EntityResolver.PRODUCT), BrowsePage.class);
         mountPage("/review", ReviewPage.class);
     	mountPage("/new", EditProductPage.class);
     }

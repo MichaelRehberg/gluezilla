@@ -13,4 +13,6 @@ public interface EntityResolver {
 	public <T extends Identifiable> T resolve(PageParameters params);
 	
 	
+	public PageParameters expand(Identifiable object);
+	
 }

@@ -3,8 +3,8 @@
  */
 package de.mrehberg.gluezilla.wicket.model;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -16,10 +16,10 @@ import de.mrehberg.gluezilla.entities.Identifiable;
  */
 public class DefaultJPAModel<T extends Identifiable> extends LoadableDetachableModel<T> {
 
-	@Inject
+	@PersistenceContext
 	private EntityManager entityManager;
 	
-	private Class<T> type;
+	protected Class<T> type;
 	
 	private int primaryKey;
 	

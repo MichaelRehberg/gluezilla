@@ -1,19 +1,14 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
-import javax.inject.Inject;
-
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.mrehberg.gluezilla.entities.Identifiable;
 import de.mrehberg.gluezilla.wicket.model.DefaultJPAModel;
-import de.mrehberg.gluezilla.wicket.util.EntityResolver;
 
 public class DefaultPage<T extends Identifiable> extends BrandedPage {
 	
 	private IModel<T> model;
-	@Inject
-	private EntityResolver resolver;
 	
 	public DefaultPage(PageParameters params) {
 		super(params);
@@ -32,8 +27,8 @@ public class DefaultPage<T extends Identifiable> extends BrandedPage {
 		model = createModel(getPageParameters());
 	}
 	
-	private IModel<T> createModel(PageParameters pageParameters) {
-		T result = resolver.resolve(pageParameters);
+	protected IModel<T> createModel(PageParameters pageParameters) {
+		T result = getResolver().resolve(pageParameters);
 		if(result!=null)
 			return new DefaultJPAModel<T>(result);
 		return null;
@@ -42,5 +37,4 @@ public class DefaultPage<T extends Identifiable> extends BrandedPage {
 	public IModel<T> getModel() {
 		return model;
 	}
-
 }

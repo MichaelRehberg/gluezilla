@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.business.NotFoundException;
+import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.entities.Identifiable;
 
 public class EntityResolverImpl implements EntityResolver {
@@ -29,6 +30,16 @@ public class EntityResolverImpl implements EntityResolver {
 			LOG.warn("Object not found: "+params,e);
 		}
 		return (T) result;
+	}
+
+	@Override
+	public PageParameters expand(Identifiable object) {
+		PageParameters params = new PageParameters();
+		if (object instanceof GProduct) {
+			GProduct product = (GProduct) object;
+			params.add(PRODUCT, product.getProductName());
+		}
+		return params;
 	}
 
 }
