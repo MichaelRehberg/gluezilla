@@ -20,14 +20,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.ByteArrayResource;
 
 import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.wicket.Resources;
 
 /**
  *
@@ -52,7 +56,15 @@ public class ChooseProductPage extends BrandedPage {
             @Override
             protected void populateItem(final ListItem<GProduct> item) {
                 BookmarkablePageLink<?> link = new BookmarkablePageLink<>("button", target, getResolver().expand(item.getModelObject()));
-                link.setBody(Model.of(item.getModelObject().getProductName()));
+                GProduct product = item.getModelObject();
+                byte[] image = product.getImage();
+                Image productImage = new Image("image", Resources.IMAGE_LOGO);
+                if(image!=null)
+                {
+                	productImage = new Image("image", new ByteArrayResource("image/png", image));
+                }
+                link.add(productImage);
+                link.add(new Label("label",item.getModelObject().getProductName()));
                 item.add(link);
             }
         });

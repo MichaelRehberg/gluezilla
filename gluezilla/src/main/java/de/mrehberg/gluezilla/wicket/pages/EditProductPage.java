@@ -1,9 +1,12 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -27,6 +30,8 @@ public class EditProductPage extends DefaultPage<GProduct> {
 
     @Inject
     private GluezillaFacade facade;
+
+	private FileUploadField imageUpload;
     
     public EditProductPage(PageParameters params) {
     	super(params);
@@ -39,6 +44,11 @@ public class EditProductPage extends DefaultPage<GProduct> {
         	@Override
         	protected void onSubmit() {
         		super.onSubmit();
+        		List<FileUpload> images = imageUpload.getConvertedInput();
+        		if(images!=null && !images.isEmpty()){
+        			FileUpload upload = images.get(0);
+        			getModel().getObject().setImage(upload.getBytes());
+        		}
         		submit(getModel());
         		setResponsePage(BrowsePage.class, getResolver().expand(getModelObject()));
         	}
@@ -62,7 +72,7 @@ public class EditProductPage extends DefaultPage<GProduct> {
         descriptionGroup.add(descriptionField);
         form.add(descriptionGroup);
 
-        FileUploadField imageUpload = new FileUploadField("image-upload");
+        imageUpload = new FileUploadField("image-upload");
         FormGroup uploadGroup = new FormGroup("upload-group", Model.of("Image"), Model.of("uploads an image for the product"));
         uploadGroup.add(imageUpload);
         imageUpload.add(new InputBehavior(Size.Medium));
