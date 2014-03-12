@@ -25,7 +25,7 @@ public class BrandedPage extends WebPage {
 
     private static final long serialVersionUID = 8057157977690204059L;
 
-    private final WebMarkupContainer content;
+    private WebMarkupContainer content;
     
 	@Inject
 	private EntityResolver resolver;
@@ -36,7 +36,21 @@ public class BrandedPage extends WebPage {
 
     public BrandedPage(PageParameters params) {
         super(params);
-
+        content = new WebMarkupContainer("content");
+        final Component sidebar = createSidebar("sidebar");
+        super.add(sidebar);
+        content.add(new AttributeModifier("class", new AbstractReadOnlyModel() {
+            @Override
+            public Object getObject() {
+                return sidebar.isVisible() ? "col-sm-10" : "col-sm-12";
+            }
+        }));
+        super.add(content);
+    }
+    
+    @Override
+    protected void onInitialize() {
+    	super.onInitialize();
         Navbar navbar = new Navbar("navbar");
         navbar.setInverted(true);
         navbar.setPosition(Position.TOP);
@@ -45,24 +59,16 @@ public class BrandedPage extends WebPage {
         createNavbarContents(navbar);
         super.add(navbar);
 
-        final Component sidebar = createSidebar("sidebar");
-        super.add(sidebar);
 
-        content = new WebMarkupContainer("content");
-        content.add(new AttributeModifier("class", new AbstractReadOnlyModel() {
-            @Override
-            public Object getObject() {
-                return sidebar.isVisible() ? "col-sm-10" : "col-sm-12";
-            }
-        }));
-        super.add(content);
 
     }
 
     
     @Override
-    public MarkupContainer add(Component... childs) {
-        return content.add(childs);
+    public MarkupContainer add(Component... children) {
+    	if(children!=null)
+    		content.add(children);
+    	return content;
     }
 
     @Override

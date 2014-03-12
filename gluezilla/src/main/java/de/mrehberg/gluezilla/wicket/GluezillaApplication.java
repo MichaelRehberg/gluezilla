@@ -40,7 +40,7 @@ public class GluezillaApplication extends WebApplication {
         
         mountPage(MessageFormat.format("/product/$'{'{0}'}'",EntityResolver.PRODUCT), BrowsePage.class);
         mountPage("/review", ReviewPage.class);
-    	mountPage("/new", EditProductPage.class);
+    	mountPage(MessageFormat.format("/edit/#'{'{0}'}'",EntityResolver.PRODUCT), EditProductPage.class);
     }
     
     @Override

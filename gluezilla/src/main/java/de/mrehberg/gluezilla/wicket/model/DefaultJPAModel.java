@@ -3,12 +3,10 @@
  */
 package de.mrehberg.gluezilla.wicket.model;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.wicket.model.LoadableDetachableModel;
 
 import de.mrehberg.gluezilla.entities.Identifiable;
+import de.mrehberg.gluezilla.wicket.GluezillaSession;
 
 /**
  * @author joe
@@ -16,8 +14,6 @@ import de.mrehberg.gluezilla.entities.Identifiable;
  */
 public class DefaultJPAModel<T extends Identifiable> extends LoadableDetachableModel<T> {
 
-	@PersistenceContext
-	private EntityManager entityManager;
 	
 	protected Class<T> type;
 	
@@ -32,7 +28,7 @@ public class DefaultJPAModel<T extends Identifiable> extends LoadableDetachableM
 
 	@Override
 	protected T load() {
-		return entityManager.getReference(type, primaryKey);
+		return GluezillaSession.get().getEntityManager().getReference(type, primaryKey);
 	}
 	
 	public static <T extends Identifiable> DefaultJPAModel<T> of(T object) {

@@ -18,35 +18,49 @@ package de.mrehberg.gluezilla.wicket.pages;
 import java.text.MessageFormat;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
 
 /**
- *
+ * 
  * @author mt
  */
 public class BrowsePage extends DefaultPage<GProduct> {
 
-    private static final long serialVersionUID = -4829807264007202804L;
+	private static final long serialVersionUID = -4829807264007202804L;
 
-    public BrowsePage(PageParameters params) {
-        super(params);
-       
-    }
-    
-    @Override
-    protected void onInitialize() {
-    	super.onInitialize();
-        String message = "Browse {0} fixes";
-        add(new Label("title", MessageFormat.format(message, getModel().getObject().getProductName())));
-    }
-    
-    @Override
-    protected Component createSidebar(String id) {
-    	return new VersionSidebar(id, getModel());
-    }
+	public BrowsePage(PageParameters params) {
+		super(params);
 
+	}
+
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+		String message = "Browse {0} fixes";
+		add(new Label("title", MessageFormat.format(message, getModel()
+				.getObject().getProductName())));
+	}
+
+	@Override
+	protected Component createSidebar(String id) {
+		return new VersionSidebar(id, getModel());
+	}
+
+	@Override
+	protected void createNavbarContents(Navbar navbar) {
+		NavbarButton<Page> menu[] = new NavbarButton[] {
+				new NavbarButton<Page>(EditProductPage.class,getResolver().expand(getModel().getObject()),Model.of("Edit"))
+				};
+		navbar.addComponents(NavbarComponents.transform(
+				Navbar.ComponentPosition.LEFT, menu));
+	}
 }

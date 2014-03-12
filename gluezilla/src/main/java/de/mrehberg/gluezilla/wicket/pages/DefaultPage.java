@@ -23,8 +23,8 @@ public class DefaultPage<T extends Identifiable> extends BrandedPage {
 	
 	@Override
 	protected void onInitialize() {
-		super.onInitialize();
 		model = createModel(getPageParameters());
+		super.onInitialize();
 	}
 	
 	protected IModel<T> createModel(PageParameters pageParameters) {

@@ -45,6 +45,10 @@ public class GluezillaFacade {
     }
     
     public void persist(Identifiable object){
-    	manager.persist(object);
+    	if(object.getID()>0)
+    		//already persisted
+    		manager.merge(object);
+    	else
+    		manager.persist(object);
     }
 }
