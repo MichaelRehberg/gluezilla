@@ -32,11 +32,6 @@ public class BrandedPage extends WebPage {
     private static final long serialVersionUID = 8057157977690204059L;
 
     private final WebMarkupContainer content;
-
-    private IModel<GProduct> product;
-
-    @Inject
-    private GluezillaFacade ejb;
     
     public BrandedPage() {
         this(new PageParameters());
@@ -44,7 +39,6 @@ public class BrandedPage extends WebPage {
 
     public BrandedPage(PageParameters params) {
         super(params);
-        product = Model.of(getProduct(params));
 
         Navbar navbar = new Navbar("navbar");
         navbar.setInverted(true);
@@ -68,38 +62,16 @@ public class BrandedPage extends WebPage {
 
     }
 
-    @Override
-    protected void detachModel() {
-        product.detach();
-        super.detachModel();
-    }
-
     
     @Override
     public MarkupContainer add(Component... childs) {
         return content.add(childs);
     }
 
-    protected GProduct getProduct(PageParameters params) {
-        if (params.getIndexedCount() == 0) {
-            return null;
-        }
-        String productName = params.get(0).toString();
-        try {
-            return ejb.getProductByName(productName);
-        } catch (NotFoundException e) {
-            throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_NOT_FOUND, productName);
-        }
-    }
-
     @Override
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(Resources.MAIN_CSS));
         super.renderHead(response);
-    }
-
-    public GProduct getProduct() {
-        return product.getObject();
     }
 
     protected void createNavbarContents(Navbar navbar) {
@@ -115,7 +87,9 @@ public class BrandedPage extends WebPage {
     }
 
     protected Component createSidebar(String id) {
-        return new VersionSidebar(id, getProduct());
+        WebMarkupContainer dummy = new WebMarkupContainer(id);
+        dummy.setVisible(false);
+        return dummy;
     }
 
 }

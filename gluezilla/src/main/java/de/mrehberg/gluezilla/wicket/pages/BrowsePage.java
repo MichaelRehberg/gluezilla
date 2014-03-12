@@ -17,29 +17,36 @@ package de.mrehberg.gluezilla.wicket.pages;
 
 import java.text.MessageFormat;
 
-
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.mrehberg.gluezilla.entities.GProduct;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
+import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
 
 /**
  *
  * @author mt
  */
-public class BrowsePage extends BrandedPage {
+public class BrowsePage extends DefaultPage<GProduct> {
 
     private static final long serialVersionUID = -4829807264007202804L;
 
     public BrowsePage(PageParameters params) {
         super(params);
-        GProduct product = getProduct();
-        if (product == null) {
-            throw new RestartResponseAtInterceptPageException(ChooseProductPage.class);
-        }
+       
+    }
+    
+    @Override
+    protected void onInitialize() {
+    	super.onInitialize();
         String message = "Browse {0} fixes";
-        add(new Label("title", MessageFormat.format(message, product.getProductName())));
+        add(new Label("title", MessageFormat.format(message, getModel().getObject().getProductName())));
+    }
+    
+    @Override
+    protected Component createSidebar(String id) {
+    	return new VersionSidebar(id, getModel());
     }
 
 }

@@ -4,6 +4,7 @@ package de.mrehberg.gluezilla.wicket.pages;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.BootstrapButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons.Type;
@@ -12,12 +13,19 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormGroup;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior.Size;
+import de.mrehberg.gluezilla.entities.GProduct;
 
-public class EditProductPage extends BrandedPage {
+public class EditProductPage extends DefaultPage<GProduct> {
 
     private static final long serialVersionUID = -3608128785543543610L;
 
-    public EditProductPage() {
+    public EditProductPage(PageParameters params) {
+    	super(params);
+    }
+    
+    @Override
+    protected void onInitialize() {
+    	super.onInitialize();
         BootstrapForm<Void> form = new BootstrapForm<Void>("product-form");
         form.type(FormType.Horizontal);
 
