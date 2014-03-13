@@ -29,6 +29,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
 import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.Resources;
@@ -73,4 +77,20 @@ public class ChooseProductPage extends BrandedPage {
     private Class<? extends Page> getTarget(PageParameters params) {
     	return BrowsePage.class;
     }
+    
+	@Override
+	protected void createNavbarContents(Navbar navbar) {
+		super.createNavbarContents(navbar);
+		NavbarButton<Page> browse = new NavbarButton<Page>(ChooseProductPage.class, Model.of("Browse"));
+		browse.setIconType(GlyphIconType.folderopen);
+		NavbarButton<Page> create = new NavbarButton<Page>(EditProductPage.class, Model.of("Create"));
+		create.setIconType(GlyphIconType.plus);
+		NavbarButton<Page> review = new NavbarButton<Page>(ReviewPage.class, Model.of("Review"));
+		review.setIconType(GlyphIconType.check);
+		navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, browse, create, review));
+
+		NavbarButton<Page> admin = new NavbarButton<Page>(EditProductPage.class, Model.of("Admin"));
+		admin.setIconType(GlyphIconType.wrench);
+		navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.RIGHT, admin));
+	}
 }

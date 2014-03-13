@@ -78,15 +78,6 @@ public class BrandedPage extends WebPage {
     }
 
     protected void createNavbarContents(Navbar navbar) {
-        NavbarButton<Page> menu[] = new NavbarButton[]{
-            new NavbarButton<Page>(BrowsePage.class, Model.of("Browse")),
-            new NavbarButton<Page>(EditProductPage.class, Model.of("Create")),
-            new NavbarButton<Page>(ReviewPage.class, Model.of("Review"))
-        };
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, menu));
-
-        NavbarButton<Page> admin = new NavbarButton<Page>(EditProductPage.class, Model.of("Admin"));
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.RIGHT, admin));
     }
 
     protected Component createSidebar(String id) {
