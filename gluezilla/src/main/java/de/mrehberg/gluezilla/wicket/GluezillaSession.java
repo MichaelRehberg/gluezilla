@@ -15,7 +15,6 @@
  */
 package de.mrehberg.gluezilla.wicket;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

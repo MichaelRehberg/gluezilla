@@ -15,13 +15,11 @@
  */
 package de.mrehberg.gluezilla.rest;
 
-import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.entities.GVersion;
 import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,6 +28,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
+import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.entities.GVersion;
 
 /**
  * 

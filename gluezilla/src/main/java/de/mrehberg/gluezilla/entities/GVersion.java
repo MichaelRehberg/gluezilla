@@ -17,6 +17,7 @@
 package de.mrehberg.gluezilla.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -81,6 +82,10 @@ public class GVersion implements Serializable, Identifiable {
 
 	public GProduct getProduct() {
 		return product;
+	}
+	
+	public void setProduct(GProduct product) {
+		this.product = product;
 	}
 
 }

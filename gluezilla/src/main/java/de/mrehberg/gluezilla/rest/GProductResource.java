@@ -16,10 +16,10 @@
 
 package de.mrehberg.gluezilla.rest;
 
-import de.mrehberg.gluezilla.business.GluezillaFacade;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.FormParam;
@@ -31,8 +31,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
-import javax.inject.Inject;
 
 /**
  * 

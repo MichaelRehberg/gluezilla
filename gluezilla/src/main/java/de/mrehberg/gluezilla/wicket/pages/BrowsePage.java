@@ -16,16 +16,22 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.AbstractLink;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarComponents;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarDropDownButton;
 import de.mrehberg.gluezilla.entities.GProduct;
 import de.mrehberg.gluezilla.wicket.panels.VersionSidebar;
 
@@ -57,10 +63,23 @@ public class BrowsePage extends DefaultPage<GProduct> {
 
 	@Override
 	protected void createNavbarContents(Navbar navbar) {
-		NavbarButton<Page> menu[] = new NavbarButton[] {
-				new NavbarButton<Page>(EditProductPage.class,getResolver().expand(getModel().getObject()),Model.of("Edit"))
-				};
-		navbar.addComponents(NavbarComponents.transform(
-				Navbar.ComponentPosition.LEFT, menu));
+		NavbarButton<Page> edit = new NavbarButton<Page>(EditProductPage.class, getResolver().expand(getModel().getObject()), Model.of("Edit"));
+		edit.setIconType(GlyphIconType.edit);
+		NavbarDropDownButton create = new NavbarDropDownButton(Model.of("Create")) {
+
+			@Override
+			protected List<AbstractLink> newSubMenuButtons(String buttonMarkupId) {
+				List<AbstractLink> submenus = new ArrayList<>();
+				BookmarkablePageLink<EditVersionPage> createHotfix = new BookmarkablePageLink<EditVersionPage>(buttonMarkupId,EditVersionPage.class,getResolver().expand(getModel().getObject()));
+				createHotfix.setBody(Model.of("Hotfix"));
+				submenus.add(createHotfix);
+				BookmarkablePageLink<EditVersionPage> createVersion = new BookmarkablePageLink<EditVersionPage>(buttonMarkupId,EditVersionPage.class,getResolver().expand(getModel().getObject()));
+				createVersion.setBody(Model.of("Version"));
+				submenus.add(createVersion);
+				return submenus;
+			}
+		};
+		create.setIconType(GlyphIconType.plus);
+		navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, edit, create));
 	}
 }

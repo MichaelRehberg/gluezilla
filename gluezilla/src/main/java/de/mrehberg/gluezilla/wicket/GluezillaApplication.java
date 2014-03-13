@@ -20,6 +20,7 @@ import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.mrehberg.gluezilla.wicket.pages.BrowsePage;
 import de.mrehberg.gluezilla.wicket.pages.ChooseProductPage;
 import de.mrehberg.gluezilla.wicket.pages.EditProductPage;
+import de.mrehberg.gluezilla.wicket.pages.EditVersionPage;
 import de.mrehberg.gluezilla.wicket.pages.ReviewPage;
 import de.mrehberg.gluezilla.wicket.util.EntityResolver;
 
@@ -41,6 +42,7 @@ public class GluezillaApplication extends WebApplication {
         mountPage(MessageFormat.format("/product/$'{'{0}'}'",EntityResolver.PRODUCT), BrowsePage.class);
         mountPage("/review", ReviewPage.class);
     	mountPage(MessageFormat.format("/edit/#'{'{0}'}'",EntityResolver.PRODUCT), EditProductPage.class);
+    	mountPage(MessageFormat.format("/edit/#'{'{0}'}'/version/#'{'{1}'}'",EntityResolver.PRODUCT, EntityResolver.VERSION), EditVersionPage.class);
     }
     
     @Override

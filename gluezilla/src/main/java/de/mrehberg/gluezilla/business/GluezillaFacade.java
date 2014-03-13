@@ -15,15 +15,15 @@
  */
 package de.mrehberg.gluezilla.business;
 
-import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.entities.Identifiable;
-
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
+import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.entities.Identifiable;
 
 @Stateless
 public class GluezillaFacade {
@@ -45,7 +45,7 @@ public class GluezillaFacade {
     }
     
     public void persist(Identifiable object){
-    	if(object.getID()>0)
+    	if(manager.contains(object))
     		//already persisted
     		manager.merge(object);
     	else

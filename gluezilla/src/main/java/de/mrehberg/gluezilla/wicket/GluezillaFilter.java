@@ -8,12 +8,11 @@ package de.mrehberg.gluezilla.wicket;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
 
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
-
-import javax.servlet.annotation.WebFilter;
 
 /**
  *
