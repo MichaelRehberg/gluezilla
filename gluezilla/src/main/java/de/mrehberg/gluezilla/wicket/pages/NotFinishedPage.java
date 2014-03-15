@@ -20,6 +20,6 @@ package de.mrehberg.gluezilla.wicket.pages;
  *
  * @author mt
  */
-public class ReviewPage extends BrandedPage {
+public class NotFinishedPage extends BrandedPage {
     
 }
