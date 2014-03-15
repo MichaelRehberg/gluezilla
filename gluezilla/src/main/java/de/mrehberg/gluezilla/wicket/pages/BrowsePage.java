@@ -45,7 +45,6 @@ public class BrowsePage extends DefaultPage<GProduct> {
 
 	public BrowsePage(PageParameters params) {
 		super(params);
-
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import de.mrehberg.gluezilla.entities.GProduct;
+import de.mrehberg.gluezilla.entities.GVersion;
 import de.mrehberg.gluezilla.entities.Identifiable;
 
 @Stateless
@@ -43,12 +44,19 @@ public class GluezillaFacade {
             throw new NotFoundException();
         }
     }
+
+    public List<GVersion> getVersions(GProduct product) {
+        return manager.createQuery("SELECT v FROM GVersion v WHERE v.product=?1", GVersion.class)
+                .setParameter(1, product)
+                .getResultList();
+                
+    }
     
-    public void persist(Identifiable object){
-    	if(manager.contains(object))
-    		//already persisted
-    		manager.merge(object);
-    	else
-    		manager.persist(object);
+    public <T extends Identifiable> T load(Class<T> clazz, int id) {
+        return manager.find(clazz, id);
+    }
+
+    public <T extends Identifiable> T persist(T object) {
+        return manager.merge(object);
     }
 }

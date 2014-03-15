@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -39,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class GHotfix implements Identifiable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@XmlElement

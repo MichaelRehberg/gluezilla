@@ -15,8 +15,6 @@
  */
 package de.mrehberg.gluezilla.wicket;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
@@ -27,9 +25,6 @@ import org.apache.wicket.request.Request;
  */
 public class GluezillaSession extends WebSession {
 
-	@PersistenceContext
-	private EntityManager entityManager;
-	
     public static GluezillaSession get() {
         return (GluezillaSession) WebSession.get();
     }
@@ -37,10 +32,5 @@ public class GluezillaSession extends WebSession {
     public GluezillaSession(Request request) {
         super(request);
     }
-    
-    public EntityManager getEntityManager() {
-		return entityManager;
-	}
-    
 
 }

@@ -1,6 +1,5 @@
 package de.mrehberg.gluezilla.wicket.pages;
 
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior.Size;
 import de.mrehberg.gluezilla.business.GluezillaFacade;
 import de.mrehberg.gluezilla.entities.GProduct;
-import de.mrehberg.gluezilla.wicket.model.AttachableJPAModel;
+import de.mrehberg.gluezilla.wicket.model.EntityModel;
 
 public class EditProductPage extends DefaultPage<GProduct> {
 
@@ -31,35 +30,34 @@ public class EditProductPage extends DefaultPage<GProduct> {
     @Inject
     private GluezillaFacade facade;
 
-	private FileUploadField imageUpload;
-    
+    private FileUploadField imageUpload;
+
     public EditProductPage(PageParameters params) {
-    	super(params);
+        super(params);
     }
-    
+
     @Override
     protected void onInitialize() {
-    	super.onInitialize();
-        BootstrapForm<GProduct> form = new BootstrapForm<GProduct>("product-form",getModel()) {
-        	@Override
-        	protected void onSubmit() {
-        		super.onSubmit();
-        		List<FileUpload> images = imageUpload.getConvertedInput();
-        		if(images!=null && !images.isEmpty()){
-        			FileUpload upload = images.get(0);
-        			getModel().getObject().setImage(upload.getBytes());
-        		}
-        		submit(getModel());
-        		setResponsePage(BrowsePage.class, getResolver().expand(getModelObject()));
-        	}
+        super.onInitialize();
+        BootstrapForm<GProduct> form = new BootstrapForm<GProduct>("product-form", getModel()) {
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+                List<FileUpload> images = imageUpload.getConvertedInput();
+                if (images != null && !images.isEmpty()) {
+                    FileUpload upload = images.get(0);
+                    getModel().getObject().setImage(upload.getBytes());
+                }
+                submit(getModel());
+                setResponsePage(BrowsePage.class, getResolver().expand(getModelObject()));
+            }
         };
         form.type(FormType.Horizontal);
 
-        
         FormGroup nameGroup = new FormGroup("name-group", Model.of("Name"), Model.of("the name of the product"));
         IModel<String> nameModel = PropertyModel.of(getModel(), "productName");
-        TextField<String> nameField = new TextField<String>("name",nameModel);
-      
+        TextField<String> nameField = new TextField<String>("name", nameModel);
+
         nameField.add(new InputBehavior(Size.Medium));
         nameField.setRequired(true);
         nameGroup.add(nameField);
@@ -67,7 +65,7 @@ public class EditProductPage extends DefaultPage<GProduct> {
 
         FormGroup descriptionGroup = new FormGroup("description-group", Model.of("Description"), Model.of("a short description for the product"));
         IModel<String> descriptionModel = PropertyModel.of(getModel(), "productDescription");
-        TextField<String> descriptionField = new TextField<String>("description",descriptionModel);
+        TextField<String> descriptionField = new TextField<String>("description", descriptionModel);
         descriptionField.add(new InputBehavior(Size.Medium));
         descriptionGroup.add(descriptionField);
         form.add(descriptionGroup);
@@ -84,20 +82,19 @@ public class EditProductPage extends DefaultPage<GProduct> {
 
         add(form);
     }
-    
+
     @Override
     protected IModel<GProduct> createModel(PageParameters pageParameters) {
-    	IModel<GProduct> model = super.createModel(pageParameters);
-    	if(model==null) {
-    		GProduct p = new GProduct();
-    		return new AttachableJPAModel<GProduct>(p);
-    	}
-    	return model;
+        IModel<GProduct> model = super.createModel(pageParameters);
+        if (model == null) {
+            GProduct p = new GProduct();
+            return new EntityModel<>(p);
+        }
+        return model;
     }
 
-    protected void submit(IModel<GProduct> model){
-
-    	facade.persist(model.getObject());
+    protected void submit(IModel<GProduct> model) {
+        model.setObject(facade.persist(model.getObject()));
     }
 
 }
